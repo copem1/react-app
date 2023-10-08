@@ -108,4 +108,28 @@ function addUser(user){
 
 });
 
-//--------MATCH(name and job)-------//
+//--------GET(name and job)-------//
+
+app.get('/users/:name/:job', (req, res) => {
+    const name = req.params.name;
+    const job = req.params.job;
+
+    if (findUserByName(name) != undefined){
+        let listOfNames = findUserByName(name);
+        if (findUserByJob(job) != undefined) {
+            let result = listOfNames.filter( (user) => user['job'] === job);
+            result = {listOfNames: result};
+            res.send(result);
+        }
+        else {
+            res.status(404).send('Resource not found.');
+        }
+    }
+    else {
+        res.status(404).send('Resource not found.');
+    }
+});
+
+const findUserByJob = (job) => { 
+    return users['users_list'].filter( (user) => user['job'] === job); 
+}
