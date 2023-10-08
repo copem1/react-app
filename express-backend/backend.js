@@ -97,8 +97,15 @@ function addUser(user){
 
 //----------DELETE----------//
 
+ app.delete('/users/:id', (req, res) => {
+    const id = req.params['id']; //or req.params.id
+    let result = findUserById(id);
+    if (result === undefined || result.length == 0)
+    res.status(404).send('Resource not found.');
+    else {
+        users['users_list'] = users['users_list'].filter( (user) => user['id'] !== id);
+}   
 
-
-
+});
 
 //--------MATCH(name and job)-------//
