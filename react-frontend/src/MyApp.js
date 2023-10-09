@@ -4,7 +4,7 @@ import axios from 'axios';
 import Table from "./Table";
 import Form from './Form';
 
-// post does not update immediately, need to refresh page after submitting for on react
+// post does not update immediately, need to refresh page after submitting for on react -- Works now
 // delete by ID does not work frontend, only backend -- should work properly now
 // are the response forms correct
 
@@ -69,8 +69,8 @@ function MyApp() {
 
   function updateList(person) { 
     makePostCall(person).then( result => {
-    if (result && result.status === 200)
-       setCharacters([...characters, person] );
+    if (result && result.status === 201)
+       setCharacters([...characters, result.data] );
     });
  }
   

@@ -90,6 +90,8 @@ app.post('/users', (req, res) => {
     const userToAdd = req.body;
     userToAdd.id = randomID();
     addUser(userToAdd);
+    // let result = findUserById(userToAdd.id);
+    // result = {users_list: result};
     res.status(201).send(userToAdd); // is this all for the 201 status code?
     //res.send('Resource Created');
 });
