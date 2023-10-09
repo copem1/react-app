@@ -4,7 +4,7 @@ function Form(props) {
   const [person, setPerson] = useState(
      {
         name: "",
-        job: "",
+        job: ""
      }
   );
 
@@ -14,10 +14,14 @@ function Form(props) {
       setPerson(
          {name: person['name'], job: value}
       );
-    else     
+    else    
        setPerson(
          {name: value, job: person['job']}   
        );
+    // else 
+    //   setPerson(
+    //      {name: person['name'], job: person['job'], id: value}   
+    //    );
   }
 
   function submitForm() {

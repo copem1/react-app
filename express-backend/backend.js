@@ -88,12 +88,27 @@ function findUserById(id) {
 
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
+    userToAdd.id = randomID();
     addUser(userToAdd);
-    res.status(200).end();
+    res.status(201).send(userToAdd); // is this all for the 201 status code?
+    //res.send('Resource Created');
 });
 
 function addUser(user){
     users['users_list'].push(user);
+}
+
+function randomID() {
+    var chars = 'abcdefghiklmnopqrstuvwxyz'.split('');
+    var nums = '0123456789'.split('');
+    var newID = '';
+    for (var i = 0; i < 3; i++) {
+        newID += chars[Math.floor(Math.random() * chars.length)];
+    }
+    for (var i = 0; i < 3; i++) {
+        newID += nums[Math.floor(Math.random() * nums.length)];
+    }
+    return newID;
 }
 
 
@@ -102,11 +117,13 @@ function addUser(user){
  app.delete('/users/:id', (req, res) => {
     const id = req.params['id']; //or req.params.id
     let result = findUserById(id);
-    if (result === undefined || result.length == 0)
-    res.status(404).send('Resource not found.');
+    if (result === undefined || result.length == 0) {
+        res.status(404).send('Resource not found.');
+    }
     else {
         users['users_list'] = users['users_list'].filter( (user) => user['id'] !== id);
-}   
+        res.status(204).send('Successful Delete Request.');
+    }     
 
 });
 

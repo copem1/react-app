@@ -4,6 +4,10 @@ import axios from 'axios';
 import Table from "./Table";
 import Form from './Form';
 
+// post does not update immediately, need to refresh page after submitting for on react
+// delete by ID does not work frontend, only backend
+// are the response forms correct
+
 function MyApp() {
   const [characters, setCharacters] = useState([]);
 
@@ -37,6 +41,27 @@ function MyApp() {
     }
   }
 
+  async function deleteUserByID(){
+    try {
+       const response = await axios.delete('http://localhost:8000/users/${id}');
+       return response.data.users_list;     
+    }
+    catch (error){
+       //We're not handling errors. Just logging into the console.
+       console.log(error); 
+       return false;         
+    }
+  }
+
+  // function removeOneCharacter (id) {
+  //   const updated = undefined;
+  //   axios.delete('http://localhost:8000/users/${id}').then( response => {
+  //     if (response.status === 204)
+  //       updated = characters.filter(character => character.id !== id);
+  //       setCharacters(updated);
+  //     });
+  // }
+
   function removeOneCharacter (index) {
     const updated = characters.filter((character, i) => {
         return i !== index
@@ -44,9 +69,6 @@ function MyApp() {
     setCharacters(updated);
   }
 
-  // function updateList(person) {
-  //   setCharacters([...characters, person]);
-  // }
 
   function updateList(person) { 
     makePostCall(person).then( result => {
